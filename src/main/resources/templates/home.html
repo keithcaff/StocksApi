@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>StocksAPI</title>
+</head>
+<body>
+    <h2>Welcome</h2>
+    <p>Stocks-api crude front end</p>
+
+    <div sec:authorize="isAuthenticated()">Text visible only to authenticated users</div>
+    Authenticated username: <div sec:authentication="name"></div>
+
+    <div sec:authorize="isAnonymous()">
+        <a th:href="@{/oauth2/authorization/okta}">Login</a>
+    </div>
+
+</body>
+</html>

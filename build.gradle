@@ -1,0 +1,38 @@
+plugins {
+	id 'org.springframework.boot' version '2.3.5.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+	id 'java'
+}
+
+group = 'com.keithcaff'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-rest'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+	// thymeleaf templating support for spring boot
+	implementation "org.springframework.boot:spring-boot-starter-thymeleaf"
+	// integrates spring boot auth and thymeleaf templating
+	implementation "org.thymeleaf.extras:thymeleaf-extras-springsecurity5"
+
+	implementation 'com.okta.spring:okta-spring-boot-starter:1.4.0'
+
+	implementation 'javax.validation:validation-api:2.0.1.Final'
+	compileOnly 'org.projectlombok:lombok'//compileOnly as we only need to build our .class files
+	annotationProcessor 'org.projectlombok:lombok'
+
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+	testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
+}
+
+test {
+	useJUnitPlatform()
+}
