@@ -14,4 +14,6 @@ StocksAPI allows users to
 * [Gradle](https://gradle.org/) for managing the project's build
 
 ## Endpoints
-To be defined
+Request Method | URI | Body (JSON) | Description |  
+:---: | :--- | :---: | :--- |
+GET | http://localhost:8080/stocks/search?{keywords} | - | Search for stocks using keywords. Returns the best-matching symbols and market information based on keywords of your choice. |

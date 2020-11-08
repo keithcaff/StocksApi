@@ -1,19 +1,20 @@
 package com.keithcaff.stocksapi.service;
 
+import com.keithcaff.stocksapi.client.StockClient;
 import com.keithcaff.stocksapi.dto.StockDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
+@RequiredArgsConstructor
 @Service
 public class StockServiceImpl implements StockService {
 
+    private final StockClient stockClient;
+
     @Override
     public List<StockDto> search(String keywords) {
-        List<StockDto> stockDtos = new ArrayList<>();
-        StockDto stock = new StockDto("TSCDY","Tesco PLC", "United States", "USD");
-        stockDtos.add(stock);
-        return stockDtos;
+        return stockClient.searchStocks(keywords);
     }
 }

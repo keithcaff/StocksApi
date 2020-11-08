@@ -8,8 +8,11 @@ spring:
       port: 27017
       host: localhost
 
+stocks:
+  client:
+    apiKey: MJJEK8TIS2ZZ7XSL
+    baseUrl: https://www.alphavantage.co/query
+
 #okta:
 #  oauth2:
 #    issuer: https://{yourOktaDomain}/oauth2/default
-#    client-id: {yourClientId}
-#    client-secret: {yourClientSecret}
