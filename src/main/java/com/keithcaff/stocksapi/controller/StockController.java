@@ -16,7 +16,7 @@ public class StockController {
     private final StockService stockService;
 
     @ResponseBody
-    @GetMapping()
+    @GetMapping("/search")
     public List<StockDto> getStocks(@RequestParam String keywords) {
         return stockService.search(keywords);
     }
