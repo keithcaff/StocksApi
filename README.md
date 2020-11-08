@@ -17,3 +17,9 @@ StocksAPI allows users to
 Request Method | URI | Body (JSON) | Description |  
 :---: | :--- | :---: | :--- |
 GET | http://localhost:8080/stocks/search?{keywords} | - | Search for stocks using keywords. Returns the best-matching symbols and market information based on keywords of your choice. |
+POST | http://localhost:8080/stocks/folllow | ```json [ { "symbol": "NKE","name": "NIKE Inc.","region": "United States","currency": "USD"}] ``` | Creates a new list of 'followed' stocks for the authorized user |
+
+## Okta
+To access the protected server, you need a valid JSON Web Token.
+Details on how to set up your own Okta Authorization server and get a JWT token can be found [here] 
+(https://developer.okta.com/blog/2019/12/26/java-mongodb-crud#create-an-oidc-application-for-your-java--mongodb-app)

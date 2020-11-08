@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 @EqualsAndHashCode
@@ -13,9 +14,13 @@ import java.io.Serializable;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class StockDto implements Serializable {
 
+    @NotBlank
     private String symbol;
+    @NotBlank
     private String name;
+    @NotBlank
     private String region;
+    @NotBlank
     private String currency;
 
     public StockDto(StockQueryDto stockQueryDto) {

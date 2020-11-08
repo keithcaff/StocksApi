@@ -20,10 +20,12 @@ dependencies {
 	implementation "org.springframework.boot:spring-boot-starter-thymeleaf"
 	// integrates spring boot auth and thymeleaf templating
 	implementation "org.thymeleaf.extras:thymeleaf-extras-springsecurity5"
-
 	implementation 'com.okta.spring:okta-spring-boot-starter:1.4.0'
-
 	implementation 'javax.validation:validation-api:2.0.1.Final'
+
+	// Repository level validations
+	implementation'org.hibernate:hibernate-validator:6.0.13.Final'
+
 	compileOnly 'org.projectlombok:lombok'//compileOnly as we only need to build our .class files
 	annotationProcessor 'org.projectlombok:lombok'
 
