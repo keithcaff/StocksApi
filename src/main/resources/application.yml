@@ -4,7 +4,8 @@ server:
 spring:
   data:
     mongodb:
-      database: stocks-api
+      auto-index-creation: true
+      database: stocks
       port: 27017
       host: localhost
 
@@ -12,6 +13,12 @@ stocks:
   client:
     apiKey: MJJEK8TIS2ZZ7XSL
     baseUrl: https://www.alphavantage.co/query
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    com.keithcaff: DEBUG
 
 #okta:
 #  oauth2:
