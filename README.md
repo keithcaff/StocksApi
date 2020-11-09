@@ -17,7 +17,9 @@ StocksAPI allows users to
 Request Method | URI | Body (JSON) | Description |  
 :---: | :--- | :---: | :--- |
 GET | http://localhost:8080/stocks/search?{keywords} | - | Search for stocks using keywords. Returns the best-matching symbols and market information based on keywords of your choice. |
-POST | http://localhost:8080/stocks/folllow | [ { "symbol": "NKE","name": "NIKE Inc.","region": "United States","currency": "USD"}] | Creates a new list of 'followed' stocks for the authorized user |
+POST | http://localhost:8080/user/stocks | [ { "symbol": "NKE","name": "NIKE Inc.","region": "United States","currency": "USD"}] | Creates a new list of 'followed' stocks for the authorized user |
+GET | http://localhost:8080/user/stocks |  | Gets a list of 'followed' stocks for the authorized user |
+
 
 ## Okta
 To access the protected server, you need a valid JSON Web Token.

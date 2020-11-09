@@ -1,10 +1,13 @@
 package com.keithcaff.stocksapi.repository;
+
 import com.keithcaff.stocksapi.entity.UserStock;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface UserStockRepository extends MongoRepository<UserStock, String> {
+import java.util.Optional;
 
+@Repository
+public interface UserStockRepository extends PagingAndSortingRepository<UserStock, String> {
+    Optional<UserStock> findByUserId (String userId);
 }
 

@@ -1,6 +1,7 @@
 package com.keithcaff.stocksapi.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.keithcaff.stocksapi.entity.Stock;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,6 +26,10 @@ public class StockDto implements Serializable {
 
     public StockDto(StockQueryDto stockQueryDto) {
         this(stockQueryDto.getSymbol(),stockQueryDto.getName(),stockQueryDto.getRegion(),stockQueryDto.getCurrency());
+    }
+
+    public StockDto(Stock stock) {
+        this(stock.getSymbol(),stock.getName(),stock.getRegion(),stock.getCurrency());
     }
 
     public StockDto(String symbol, String name, String region, String currency) {
