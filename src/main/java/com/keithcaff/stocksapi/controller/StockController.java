@@ -13,6 +13,7 @@ import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,7 +30,7 @@ public class StockController {
     @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/user/stocks")
-    public UserStockDto followStocks(@RequestBody @Valid List<StockDto> stockDtos) {
+    public UserStockDto followStocks(@RequestBody @Valid Set<StockDto> stockDtos) {
         UserStock userStock = stockService.createUserStock(stockDtos);
         return new UserStockDto(userStock);
     }
@@ -47,8 +48,12 @@ public class StockController {
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/user/stocks/{userStocksId}")
-    public void updateStocks(@RequestBody @Valid List<StockDto> stockDtos, @PathVariable("userStocksId") String userStocksId) {
-        //TODO: implement this
+    public UserStockDto updateStocks(@RequestBody @Valid Set<StockDto> stockDtos, @PathVariable("userStocksId") String userStocksId) {
+        Optional<UserStock> userStock = stockService.updateUserStocks(stockDtos,userStocksId);
+        if (userStock.isPresent()) {
+            return new UserStockDto(userStock.get());
+        }
+        String errorMessage = String.format("User does not have any Stocks with id %s", userStocksId);
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, errorMessage);
     }
-
 }

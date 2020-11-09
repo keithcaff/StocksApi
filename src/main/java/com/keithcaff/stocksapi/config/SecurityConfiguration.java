@@ -13,7 +13,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll()
                 .anyRequest().authenticated()
 //                .and()
-//                .oauth2Login() //Comment out to disable Okta login form when unauthorized endpoints accessed
+//                .oauth2Login() //Commented out to disable Okta login form when unauthorized endpoints accessed
                 .and()
                 .oauth2ResourceServer()
                 .jwt();

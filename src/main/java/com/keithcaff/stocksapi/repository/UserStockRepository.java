@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface UserStockRepository extends PagingAndSortingRepository<UserStock, String> {
+public interface UserStockRepository extends PagingAndSortingRepository<UserStock, String>, StockRepositoryCustomQueries {
     Optional<UserStock> findByUserId (String userId);
 }
 

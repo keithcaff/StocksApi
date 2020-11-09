@@ -2,6 +2,7 @@ package com.keithcaff.stocksapi.service;
 
 import com.keithcaff.stocksapi.client.StockClient;
 import com.keithcaff.stocksapi.dto.StockDto;
+import com.keithcaff.stocksapi.entity.Stock;
 import com.keithcaff.stocksapi.entity.UserStock;
 import com.keithcaff.stocksapi.exception.StockServiceException;
 import com.keithcaff.stocksapi.repository.UserStockRepository;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -27,7 +30,7 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
-    public UserStock createUserStock(List<StockDto> stockDtos) {
+    public UserStock createUserStock(Set<StockDto> stockDtos) {
         UserStock userStock = new UserStock(stockDtos);
         UserStock persistedStock;
         try {
@@ -44,5 +47,11 @@ public class StockServiceImpl implements StockService {
     @Override
     public Optional<UserStock> getUserStocks(String userId) {
         return userStockRepository.findByUserId(userId);
+    }
+
+    @Override
+    public Optional<UserStock> updateUserStocks(Set<StockDto> stockDtos, String userStockId) {
+        Set<Stock> stocks = stockDtos.stream().map(Stock::new).collect(Collectors.toSet());
+        return userStockRepository.updateUserStocks(stocks,userStockId);
     }
 }

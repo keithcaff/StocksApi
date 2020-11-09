@@ -9,7 +9,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.annotation.Id;
 
 import javax.validation.constraints.NotNull;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -31,12 +30,8 @@ public class UserStock {
 
     private Set<Stock> stocks;
 
-    public UserStock(Set<Stock> stocks) {
-        this.stocks = stocks;
-    }
-
-    public UserStock(List<StockDto> stockDtoList) {
-        this.stocks = stockDtoList.stream().map(Stock::new).collect(Collectors.toSet());
+    public UserStock(Set<StockDto> stockDtos) {
+        this.stocks = stockDtos.stream().map(Stock::new).collect(Collectors.toSet());
     }
 }
 
