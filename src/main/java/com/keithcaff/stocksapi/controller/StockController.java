@@ -6,15 +6,18 @@ import com.keithcaff.stocksapi.entity.UserStock;
 import com.keithcaff.stocksapi.service.StockService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+@Validated
 @RestController
 @RequiredArgsConstructor
 public class StockController {
@@ -23,7 +26,7 @@ public class StockController {
 
     @ResponseBody
     @GetMapping("/stocks/search")
-    public List<StockDto> getStocks(@RequestParam String keywords) {
+    public List<StockDto> getStocks(@RequestParam @NotBlank String keywords) {
         return stockService.search(keywords);
     }
 

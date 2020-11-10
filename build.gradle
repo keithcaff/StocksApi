@@ -33,6 +33,9 @@ dependencies {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
 	testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
+	testImplementation 'org.mockito:mockito-junit-jupiter:3.5.13'
+	testImplementation 'org.springframework.security:spring-security-test'
+
 }
 
 test {
