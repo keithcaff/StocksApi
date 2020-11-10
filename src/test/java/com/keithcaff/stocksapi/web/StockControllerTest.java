@@ -33,13 +33,10 @@ public class StockControllerTest {
     private static final String PUT_USER_STOCKS_ENDPOINT = "/user/stocks/{userStockId}";
     private static final String SEARCH_STOCKS_ENDPOINT = "/stocks/search";
 
-
     @Autowired
     private MockMvc mockMvc;
     @MockBean
     private StockService stockService;
-    @MockBean
-    JwtDecoder jwtDecoder;
 
     @WithAnonymousUser
     @Test
@@ -111,7 +108,7 @@ public class StockControllerTest {
                 new StockDto("AAPL", "Apple Inc.", "United States", "USD"),
                 new StockDto("APLE", "Apple Hospitality REIT Inc.", "United States", "USD"));
         when(stockService.search(keywordsParamValue)).thenReturn(stockDtos);
-       
+
         // when/then
         mockMvc.perform(get(SEARCH_STOCKS_ENDPOINT).param("keywords", keywordsParamValue)
                 .with(csrf()))
