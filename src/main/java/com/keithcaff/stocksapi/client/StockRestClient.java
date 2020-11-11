@@ -10,27 +10,35 @@ import com.keithcaff.stocksapi.exception.StockRestClientException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
-@RequiredArgsConstructor
 @Component
 public class StockRestClient implements StockClient {
 
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
 
-    @Value("${stocks.client.baseUrl}")
-    String baseUrl;
     @Value("${stocks.client.apiKey}")
     String apiKey;
+    @Value("${stocks.client.baseUrl}")
+    String baseUrl;
+
+    public StockRestClient(RestTemplateBuilder builder, ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+        this.restTemplate = builder.setConnectTimeout(Duration.ofMillis(3000))
+                .setReadTimeout(Duration.ofMillis(3000))
+                .build();
+    }
 
     public List<StockDto> searchStocks(String keywords) {
         HttpHeaders headers = new HttpHeaders();

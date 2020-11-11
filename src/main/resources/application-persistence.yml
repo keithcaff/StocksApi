@@ -1,0 +1,7 @@
+spring:
+  data:
+    mongodb:
+      auto-index-creation: true
+      database: stocksTest
+      port: 27018
+      host: localhost

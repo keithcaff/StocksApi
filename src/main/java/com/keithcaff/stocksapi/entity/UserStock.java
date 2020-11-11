@@ -33,6 +33,12 @@ public class UserStock {
     public UserStock(Set<StockDto> stockDtos) {
         this.stocks = stockDtos.stream().map(Stock::new).collect(Collectors.toSet());
     }
+
+    public UserStock(String id, String userId, Set<Stock> stocks) {
+        this.id = id;
+        this.userId = userId;
+        this.stocks = stocks;
+    }
 }
 
 

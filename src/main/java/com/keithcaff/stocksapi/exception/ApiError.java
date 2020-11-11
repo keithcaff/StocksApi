@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.http.HttpStatus;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -14,6 +15,12 @@ public class ApiError {
     private HttpStatus status;
     private String message;
     private List<String> errors;
+
+    public ApiError(final HttpStatus status, final String message) {
+        this.status = status;
+        this.message = message;
+        this.errors = new ArrayList<>();
+    }
 
     public ApiError(final HttpStatus status, final String message, final List<String> errors) {
         this.status = status;

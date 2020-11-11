@@ -5,12 +5,14 @@ import com.keithcaff.stocksapi.controller.StockController;
 import com.keithcaff.stocksapi.dto.StockDto;
 import com.keithcaff.stocksapi.dto.UserStockDto;
 import com.keithcaff.stocksapi.entity.UserStock;
+import com.keithcaff.stocksapi.exception.StockConflictException;
 import com.keithcaff.stocksapi.service.StockService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -39,20 +41,23 @@ public class StockControllerTest {
 
     @WithAnonymousUser
     @Test
-    @DisplayName("POST /user/stocks should return 401 UNAUTHORIZED with anonymous user")
+    @DisplayName("POST /user/stocks should redirect to login page")
     public void testPostNewUserStockAuthenticates() throws Exception {
         // given
         StockDto nikeStockDto = new StockDto("NKE", "NIKE Inc.", "United States", "USD");
         Set<StockDto> stockDtos = new HashSet<>(Arrays.asList(nikeStockDto));
         UserStock userStock = new UserStock(stockDtos);
         when(stockService.createUserStock(stockDtos)).thenReturn(userStock);
+        String oktaLogin = "http://localhost/oauth2/authorization/okta";
 
         // when/then
         mockMvc.perform(post(USER_STOCKS_ENDPOINT)
                 .with(csrf())
                 .contentType(APPLICATION_JSON)
                 .content(asJsonString(stockDtos)))
-                .andExpect(status().isUnauthorized());
+                .andExpect(status().isFound())
+                .andExpect(header().string(HttpHeaders.LOCATION, oktaLogin))
+                .andDo(print());
     }
 
     @WithMockUser
@@ -95,6 +100,25 @@ public class StockControllerTest {
                 .andExpect(jsonPath("$.message", containsString(("name: must not be blank"))))
                 .andExpect(jsonPath("$.message", containsString(("symbol: must not be blank"))))
                 .andExpect(content().contentType(APPLICATION_JSON));
+    }
+
+    @WithMockUser
+    @Test
+    @DisplayName("POST /user/stocks should return 403 response when UserStock resource already exists")
+    public void testPostUserStockHandlesStockConflictException() throws Exception {
+        // given
+        StockDto nikeStockDto = new StockDto("NKE", "NIKE Inc.", "United States", "USD");
+        Set<StockDto> stockDtos = new HashSet<>(Arrays.asList(nikeStockDto));
+        UserStock userStock = new UserStock(stockDtos);
+        when(stockService.createUserStock(stockDtos)).thenThrow(new StockConflictException("User Stock already exists"));
+
+        // when/then
+        mockMvc.perform(post(USER_STOCKS_ENDPOINT)
+                .with(csrf())
+                .contentType(APPLICATION_JSON)
+                .content(asJsonString(stockDtos)))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message", containsString(("User Stock already exists"))));
     }
 
     @WithMockUser
@@ -177,11 +201,11 @@ public class StockControllerTest {
         UserStock userStock = new UserStock(stockDtos);
         userStock.setId(userStocksId);
         userStock.setUserId("user");
-        when(stockService.updateUserStocks(stockDtos,userStocksId)).thenReturn(Optional.of(userStock));
+        when(stockService.updateUserStocks(stockDtos, userStocksId)).thenReturn(Optional.of(userStock));
 
         // when/then
         UserStockDto expectedResponse = new UserStockDto(userStock);
-        mockMvc.perform(put(PUT_USER_STOCKS_ENDPOINT,userStocksId)
+        mockMvc.perform(put(PUT_USER_STOCKS_ENDPOINT, userStocksId)
                 .with(csrf())
                 .contentType(APPLICATION_JSON)
                 .content(asJsonString(stockDtos)))
@@ -198,10 +222,10 @@ public class StockControllerTest {
         String invalidUserStockId = "someInvalidUserStcokId";
         Set<StockDto> stockDtos = new HashSet<>(Arrays.asList(
                 new StockDto("AAPL", "Apple Inc.", "United States", "USD")));
-        when(stockService.updateUserStocks(stockDtos,invalidUserStockId)).thenReturn(Optional.empty());
+        when(stockService.updateUserStocks(stockDtos, invalidUserStockId)).thenReturn(Optional.empty());
 
         // when/then
-        mockMvc.perform(put(PUT_USER_STOCKS_ENDPOINT,invalidUserStockId)
+        mockMvc.perform(put(PUT_USER_STOCKS_ENDPOINT, invalidUserStockId)
                 .with(csrf())
                 .contentType(APPLICATION_JSON)
                 .content(asJsonString(stockDtos)))
