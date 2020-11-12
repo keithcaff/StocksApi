@@ -24,3 +24,30 @@ PUT | http://localhost:8080/user/stocks/{userStockId} |  | Updates the set of 'f
 ## Okta
 To access the protected server, you need a valid JSON Web Token.
 Details on how to set up your own Okta Authorization server and get a JWT token can be found [here](https://developer.okta.com/blog/2019/12/26/java-mongodb-crud#create-an-oidc-application-for-your-java--mongodb-app)
+
+## To run the unit and integration tests
+From root of the project 
+gradle:
+```
+./gradlew clean build
+```
+
+## To run the application
+### Dependencies
+MongoDB - The mongo needs to be daemon running on localhost:27017. Steps on how to install with homebrew are outlined [here](https://treehouse.github.io/installation-guides/mac/mongo-mac.html)
+### Config
+Ensure you have set Okta oauth config values in application.yml file. Populate 'issuer', 'client-id' and 'client-secret' properties
+```
+okta:
+  oauth2:
+    issuer: https://dev-8153053.okta.com/oauth2/default
+    client-id: 1234567688
+    client-secret: 1234567688
+```
+ 
+2. Run the following gradle command from the root project directory:
+```
+./gradlew bootRun
+```
+3. You can navigate to localhost:8080/ to view the home screen where you can login/create a user
+4. If you just want to invoke the rest endpoints you can get a valid token using [OIDCDebugger](https://oidcdebugger.com/). Details on how to get token from OIDC Debugger are outlined in this Okta blog entry [here](https://developer.okta.com/blog/2020/01/09/java-rest-api-showdown#generate-tokens-using-openid-connect-debugger)
