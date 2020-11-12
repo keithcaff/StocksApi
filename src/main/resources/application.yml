@@ -7,9 +7,7 @@ spring:
   data:
     mongodb:
       auto-index-creation: true
-      database: stocks
-      port: 27017
-      host: localhost
+      uri: mongodb://localhost:27017/stocks
 
 stocks:
   client:
