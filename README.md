@@ -16,7 +16,7 @@ StocksAPI allows users to
 ## Endpoints
 Request Method | URI | Body (JSON) | Description |  
 :---: | :--- | :---: | :--- |
-GET | http://localhost:8080/stocks/search?{keywords} | - | Search for stocks using keywords. Returns the best-matching symbols and market information based on keywords of your choice. |
+GET | http://localhost:8080/stocks/search?keywords=apple | - | Search for stocks using keywords. Returns the best-matching symbols and market information based on keywords of your choice. |
 POST | http://localhost:8080/user/stocks | [ { "symbol": "NKE","name": "NIKE Inc.","region": "United States","currency": "USD"}] | Creates a new set of 'followed' stocks for the authorized user |
 GET | http://localhost:8080/user/stocks |  | Gets a set of 'followed' stocks for the authorized user |
 PUT | http://localhost:8080/user/stocks/{userStockId} |  | Updates the set of 'followed' stocks using the userStocksId |
