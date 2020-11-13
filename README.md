@@ -34,7 +34,7 @@ gradle:
 
 ## To run the application
 ### Dependencies
-MongoDB - The mongo needs to be daemon running on localhost:27017. Steps on how to install with homebrew are outlined [here](https://treehouse.github.io/installation-guides/mac/mongo-mac.html)
+MongoDB - The mongo daemon process needs to be running on localhost:27017. Steps on how to install with homebrew are outlined [here](https://treehouse.github.io/installation-guides/mac/mongo-mac.html)
 ### Config
 Ensure you have set Okta oauth config values in application.yml file. Populate 'issuer', 'client-id' and 'client-secret' properties
 ```
