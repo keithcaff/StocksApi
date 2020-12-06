@@ -16,7 +16,7 @@ StocksAPI allows users to
 ## Endpoints
 Request Method | URI | Body (JSON) | Description |  
 :---: | :--- | :---: | :--- |
-GET | http://localhost:8080/stocks/search?{keywords} | - | Search for stocks using keywords. Returns the best-matching symbols and market information based on keywords of your choice. |
+GET | http://localhost:8080/stocks/search?keywords=apple | - | Search for stocks using keywords. Returns the best-matching symbols and market information based on keywords of your choice. |
 POST | http://localhost:8080/user/stocks | [ { "symbol": "NKE","name": "NIKE Inc.","region": "United States","currency": "USD"}] | Creates a new set of 'followed' stocks for the authorized user |
 GET | http://localhost:8080/user/stocks |  | Gets a set of 'followed' stocks for the authorized user |
 PUT | http://localhost:8080/user/stocks/{userStockId} |  | Updates the set of 'followed' stocks using the userStocksId |
@@ -34,7 +34,7 @@ gradle:
 
 ## To run the application
 ### Dependencies
-MongoDB - The mongo needs to be daemon running on localhost:27017. Steps on how to install with homebrew are outlined [here](https://treehouse.github.io/installation-guides/mac/mongo-mac.html)
+MongoDB - The mongo daemon process needs to be running on localhost:27017. Steps on how to install with homebrew are outlined [here](https://treehouse.github.io/installation-guides/mac/mongo-mac.html)
 ### Config
 Ensure you have set Okta oauth config values in application.yml file. Populate 'issuer', 'client-id' and 'client-secret' properties
 ```
