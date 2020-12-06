@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.keithcaff.stocksapi.dto.StockDto;
 import com.keithcaff.stocksapi.dto.StockQueryDto;
 import com.keithcaff.stocksapi.exception.StockRestClientException;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;

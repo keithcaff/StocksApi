@@ -3,7 +3,6 @@ package com.keithcaff.stocksapi.controller;
 import com.keithcaff.stocksapi.exception.ApiError;
 import com.keithcaff.stocksapi.exception.StockConflictException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -21,13 +20,13 @@ import java.util.List;
 public class StockControllerAdvice extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(StockConflictException.class)
-    public ResponseEntity<Object> stockConflictException(final StockConflictException e) {
+    public ResponseEntity<ApiError> stockConflictException(final StockConflictException e) {
         final ApiError apiError = new ApiError(HttpStatus.FORBIDDEN, e.getLocalizedMessage());
-        return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
+        return new ResponseEntity<>(apiError, apiError.getStatus());
     }
 
     @ExceptionHandler({ConstraintViolationException.class})
-    public ResponseEntity<Object> handleConstraintViolation(final ConstraintViolationException ex, final WebRequest request) {
+    public ResponseEntity<ApiError> handleConstraintViolation(final ConstraintViolationException ex, final WebRequest request) {
         log.error(ex.getLocalizedMessage());
 
         final List<String> errors = new ArrayList<>();
@@ -36,6 +35,6 @@ public class StockControllerAdvice extends ResponseEntityExceptionHandler {
         }
 
         final ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), errors);
-        return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
+        return new ResponseEntity<>(apiError, apiError.getStatus());
     }
 }

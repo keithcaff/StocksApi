@@ -18,8 +18,6 @@ import java.util.stream.Collectors;
 @EqualsAndHashCode
 @NoArgsConstructor
 @Document(collection = "user_stock")
-
-@CompoundIndex(name = "user_stock_symbol_idx", unique = true, def = "{'userId':1, 'symbol':1}")
 public class UserStock {
     @Id
     private String id;

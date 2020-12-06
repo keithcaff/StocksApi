@@ -133,8 +133,7 @@ public class StockControllerTest {
         when(stockService.search(keywordsParamValue)).thenReturn(stockDtos);
 
         // when/then
-        mockMvc.perform(get(SEARCH_STOCKS_ENDPOINT).param("keywords", keywordsParamValue)
-                .with(csrf()))
+        mockMvc.perform(get(SEARCH_STOCKS_ENDPOINT).param("keywords", keywordsParamValue))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON))
                 .andExpect(content().string(asJsonString(stockDtos)));
